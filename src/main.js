@@ -4,13 +4,16 @@ import {
   createGallery,
   showLoader,
   hideLoader,
+  showLoadMoreBtn,
+  hideLoadMoreBtn,
+  showGalleryLoader,
+  hideGalleryLoader,
 } from './js/render-functions';
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 
 const form = document.querySelector('.form');
 const loadMoreBtn = document.querySelector('.load');
-const galleryLoader = document.querySelector('.gallery-loader');
 
 let currentQuery = '';
 let currentPage = 1;
@@ -86,7 +89,7 @@ loadMoreBtn.addEventListener('click', async () => {
 
   try {
     const data = await getImagesByQuery(currentQuery, currentPage, perPage);
-    createGallery(data.hits, true); // append = true
+    createGallery(data.hits, true);
     smoothScroll();
 
     const totalLoaded = currentPage * perPage;
@@ -115,19 +118,6 @@ loadMoreBtn.addEventListener('click', async () => {
     hideGalleryLoader();
   }
 });
-
-function showLoadMoreBtn() {
-  loadMoreBtn.classList.remove('is-hidden');
-}
-function hideLoadMoreBtn() {
-  loadMoreBtn.classList.add('is-hidden');
-}
-function showGalleryLoader() {
-  galleryLoader.classList.remove('is-hidden');
-}
-function hideGalleryLoader() {
-  galleryLoader.classList.add('is-hidden');
-}
 
 function smoothScroll() {
   const card = document.querySelector('.gallery a');
